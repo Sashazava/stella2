@@ -98,5 +98,7 @@ async function bootstrap() {
   app.mount('#app')
   console.log('[BOOT] ✅ App mounted successfully')
   console.log('[BOOT] Current URL:', window.location.href)
+}
+
 
 bootstrap().catch(e => console.error('[BOOT] ❌ bootstrap() FATAL:', e))
