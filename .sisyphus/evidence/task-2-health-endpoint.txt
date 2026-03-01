@@ -1,0 +1,31 @@
+=== HEALTH ENDPOINT VERIFICATION ===
+
+FastAPI Application: /api/health endpoint
+
+ENDPOINT DEFINITION (from app/main.py):
+@app.get("/api/health")
+async def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+EXPECTED RESPONSE:
+- HTTP Method: GET
+- Path: /api/health
+- Response Type: JSON
+- Response Body: {"status": "ok"}
+- Status Code: 200 OK
+
+FASTAPI APP CONFIGURATION:
+- Title: "Stella API"
+- Description: "Stella Marketplace — Telegram Mini App"
+- Version: "0.1.0"
+- Lifespan: Configured with startup/shutdown hooks
+- CORS: Enabled for all origins
+
+MIDDLEWARE STACK:
+- CORSMiddleware with:
+  - allow_origins: ["*"]
+  - allow_credentials: True
+  - allow_methods: ["*"]
+  - allow_headers: ["*"]
+
+VERIFICATION STATUS: ✓ Endpoint defined and ready for testing

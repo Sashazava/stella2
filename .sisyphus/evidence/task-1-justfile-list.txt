@@ -1,0 +1,52 @@
+python := "uv run"
+node := "pnpm"
+
+[private]
+default:
+    @just --list --unsorted
+
+up:
+    docker compose up -d
+
+down:
+    docker compose down
+
+logs service="api":
+    docker compose logs -f {{ service }}
+
+db-migrate:
+    {{ python }} alembic upgrade head
+
+db-revision msg:
+    {{ python }} alembic revision --autogenerate -m "{{ msg }}"
+
+py-dev:
+    {{ python }} granian --interface asgi app.main:app --reload --host 0.0.0.0 --port 8000
+
+py-test *args:
+    {{ python }} pytest {{ args }} -x --tb=short
+
+py-lint:
+    {{ python }} ruff check . --fix && {{ python }} ruff format .
+
+py-types:
+    {{ python }} mypy app/
+
+node-dev:
+    {{ node }} run dev
+
+node-build:
+    {{ node }} run build
+
+node-test:
+    {{ node }} run test
+
+check: py-lint py-types py-test node-test
+
+env-init:
+    cp .env.example .env
+
+secret:
+    python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+=== JUSTFILE CONTENT ===
+50 justfile

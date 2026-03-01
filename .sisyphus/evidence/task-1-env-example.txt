@@ -1,0 +1,22 @@
+# Telegram Bot
+BOT_TOKEN=your_bot_token_here
+APP_BASE_URL=https://your-domain.com
+WEBHOOK_SECRET=your_webhook_secret_here
+
+# Database
+POSTGRES_USER=stella
+POSTGRES_PASSWORD=stella_secret
+POSTGRES_DB=stella
+DATABASE_URL=postgresql+psycopg://stella:stella_secret@localhost:5432/stella
+
+# Redis
+REDIS_URL=redis://localhost:6379
+
+# MinIO S3
+MINIO_ROOT_USER=minioadmin
+MINIO_ROOT_PASSWORD=minioadmin_secret
+MINIO_ENDPOINT=localhost:9000
+MINIO_SERVER_URL=http://localhost:9000
+
+# Admin
+ADMIN_TELEGRAM_IDS=123456789,987654321

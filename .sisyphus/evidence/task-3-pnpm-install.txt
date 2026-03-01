@@ -1,0 +1,142 @@
+=== TASK 3: FRONTEND SCAFFOLDING - PNPM INSTALL ===
+Date: $(date)
+Working Directory: /home/fosterspc/project/site/frontend
+
+COMMAND: pnpm install
+
+OUTPUT:
+ WARN  deprecated @telegram-apps/sdk-vue@2.0.31: The package is unsupported anymore. Use @tma.js/sdk-vue instead
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 4, reused 0, downloaded 0, added 0
+Progress: resolved 7, reused 0, downloaded 0, added 0
+Progress: resolved 8, reused 0, downloaded 2, added 0
+Progress: resolved 11, reused 0, downloaded 3, added 0
+Progress: resolved 11, reused 0, downloaded 5, added 0
+Progress: resolved 12, reused 0, downloaded 6, added 0
+Progress: resolved 12, reused 0, downloaded 7, added 0
+Progress: resolved 13, reused 0, downloaded 8, added 0
+Progress: resolved 13, reused 0, downloaded 9, added 0
+Progress: resolved 13, reused 0, downloaded 10, added 0
+Progress: resolved 13, reused 0, downloaded 11, added 0
+Progress: resolved 13, reused 0, downloaded 12, added 0
+ WARN  Request took 28045ms: https://registry.npmjs.org/typescript
+Progress: resolved 14, reused 0, downloaded 12, added 0
+ WARN  Request took 36903ms: https://registry.npmjs.org/tailwindcss
+Progress: resolved 15, reused 0, downloaded 12, added 0
+Progress: resolved 16, reused 0, downloaded 12, added 0
+Progress: resolved 32, reused 0, downloaded 12, added 0
+Progress: resolved 35, reused 0, downloaded 23, added 0
+Progress: resolved 37, reused 0, downloaded 26, added 0
+ WARN  Tarball download average speed 27 KiB/s (size 34 KiB) is below 50 KiB/s: https://registry.npmjs.org/saxes/-/saxes-6.0.0.tgz (GET)
+ WARN  Tarball download average speed 45 KiB/s (size 84 KiB) is below 50 KiB/s: https://registry.npmjs.org/parse5/-/parse5-7.3.0.tgz (GET)
+ WARN  Tarball download average speed 24 KiB/s (size 33 KiB) is below 50 KiB/s: https://registry.npmjs.org/ws/-/ws-8.19.0.tgz (GET)
+Progress: resolved 40, reused 0, downloaded 31, added 0
+Progress: resolved 46, reused 0, downloaded 34, added 0
+ WARN  Tarball download average speed 38 KiB/s (size 181 KiB) is below 50 KiB/s: https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.2.1.tgz (GET)
+Progress: resolved 52, reused 0, downloaded 38, added 0
+ WARN  Tarball download average speed 41 KiB/s (size 191 KiB) is below 50 KiB/s: https://registry.npmjs.org/js-beautify/-/js-beautify-1.15.4.tgz (GET)
+Progress: resolved 55, reused 0, downloaded 43, added 0
+Progress: resolved 57, reused 0, downloaded 48, added 0
+Progress: resolved 63, reused 0, downloaded 50, added 0
+ WARN  Tarball download average speed 43 KiB/s (size 87 KiB) is below 50 KiB/s: https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz (GET)
+Progress: resolved 65, reused 0, downloaded 55, added 0
+Progress: resolved 70, reused 0, downloaded 58, added 0
+Progress: resolved 80, reused 0, downloaded 62, added 0
+Progress: resolved 84, reused 0, downloaded 68, added 0
+ WARN  Request took 11535ms: https://registry.npmjs.org/rollup
+Progress: resolved 87, reused 0, downloaded 72, added 0
+Progress: resolved 92, reused 0, downloaded 72, added 0
+Progress: resolved 96, reused 0, downloaded 75, added 0
+ WARN  Tarball download average speed 35 KiB/s (size 72 KiB) is below 50 KiB/s: https://registry.npmjs.org/glob/-/glob-10.5.0.tgz (GET)
+ WARN  Tarball download average speed 41 KiB/s (size 62 KiB) is below 50 KiB/s: https://registry.npmjs.org/tr46/-/tr46-5.1.1.tgz (GET)
+Progress: resolved 97, reused 0, downloaded 81, added 0
+ WARN  Tarball download average speed 48 KiB/s (size 186 KiB) is below 50 KiB/s: https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz (GET)
+ WARN  Tarball download average speed 45 KiB/s (size 109 KiB) is below 50 KiB/s: https://registry.npmjs.org/entities/-/entities-6.0.1.tgz (GET)
+Progress: resolved 100, reused 0, downloaded 87, added 0
+ WARN  Tarball download average speed 45 KiB/s (size 307 KiB) is below 50 KiB/s: https://registry.npmjs.org/@vue/runtime-dom/-/runtime-dom-3.5.29.tgz (GET)
+Progress: resolved 109, reused 0, downloaded 91, added 0
+Progress: resolved 111, reused 0, downloaded 95, added 0
+Progress: resolved 116, reused 0, downloaded 97, added 0
+Progress: resolved 117, reused 0, downloaded 102, added 0
+ WARN  Tarball download average speed 43 KiB/s (size 99 KiB) is below 50 KiB/s: https://registry.npmjs.org/minimatch/-/minimatch-9.0.9.tgz (GET)
+Progress: resolved 118, reused 0, downloaded 106, added 0
+Progress: resolved 120, reused 0, downloaded 107, added 0
+ WARN  Tarball download average speed 43 KiB/s (size 378 KiB) is below 50 KiB/s: https://registry.npmjs.org/@asamuzakjp/css-color/-/css-color-3.2.0.tgz (GET)
+Progress: resolved 122, reused 0, downloaded 108, added 0
+Progress: resolved 122, reused 0, downloaded 109, added 0
+ WARN  Tarball download average speed 41 KiB/s (size 556 KiB) is below 50 KiB/s: https://registry.npmjs.org/@vue/compiler-sfc/-/compiler-sfc-3.5.29.tgz (GET)
+Progress: resolved 127, reused 0, downloaded 110, added 0
+Progress: resolved 133, reused 0, downloaded 110, added 0
+Progress: resolved 139, reused 0, downloaded 114, added 0
+Progress: resolved 145, reused 0, downloaded 115, added 0
+Progress: resolved 153, reused 0, downloaded 118, added 0
+Progress: resolved 153, reused 0, downloaded 126, added 0
+ WARN  Request took 10971ms: https://registry.npmjs.org/@tailwindcss%2Foxide-win32-x64-msvc
+Progress: resolved 156, reused 0, downloaded 131, added 0
+Progress: resolved 163, reused 0, downloaded 133, added 0
+Progress: resolved 172, reused 0, downloaded 133, added 0
+Progress: resolved 180, reused 0, downloaded 133, added 0
+Progress: resolved 192, reused 0, downloaded 133, added 0
+Progress: resolved 200, reused 0, downloaded 133, added 0
+Progress: resolved 213, reused 0, downloaded 133, added 0
+Progress: resolved 219, reused 0, downloaded 136, added 0
+ WARN  Tarball download average speed 25 KiB/s (size 27 KiB) is below 50 KiB/s: https://registry.npmjs.org/semver/-/semver-7.7.4.tgz (GET)
+Progress: resolved 225, reused 0, downloaded 142, added 0
+ WARN  Tarball download average speed 47 KiB/s (size 59 KiB) is below 50 KiB/s: https://registry.npmjs.org/jackspeak/-/jackspeak-3.4.3.tgz (GET)
+Progress: resolved 227, reused 0, downloaded 148, added 0
+Progress: resolved 233, reused 0, downloaded 153, added 0
+Progress: resolved 240, reused 0, downloaded 155, added 0
+Progress: resolved 250, reused 0, downloaded 156, added 0
+ WARN  Tarball download average speed 34 KiB/s (size 39 KiB) is below 50 KiB/s: https://registry.npmjs.org/he/-/he-1.2.0.tgz (GET)
+Progress: resolved 255, reused 0, downloaded 164, added 0
+Progress: resolved 259, reused 0, downloaded 170, added 0
+Progress: resolved 266, reused 0, downloaded 174, added 0
+Progress: resolved 273, reused 0, downloaded 179, added 0
+Progress: resolved 281, reused 0, downloaded 186, added 0
+Progress: resolved 286, reused 0, downloaded 197, added 0
+Progress: resolved 292, reused 0, downloaded 203, added 0
+Progress: resolved 293, reused 0, downloaded 211, added 0
+Progress: resolved 294, reused 0, downloaded 217, added 0
+Progress: resolved 294, reused 0, downloaded 218, added 0
+Progress: resolved 294, reused 0, downloaded 219, added 0
+ WARN  5 deprecated subdependencies found: @telegram-apps/bridge@2.11.0, @telegram-apps/transformers@2.2.6, @telegram-apps/types@2.0.3, glob@10.5.0, whatwg-encoding@3.1.1
+Packages: +223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 294, reused 0, downloaded 219, added 219
+Progress: resolved 294, reused 0, downloaded 220, added 219
+Progress: resolved 294, reused 0, downloaded 220, added 220
+Progress: resolved 294, reused 0, downloaded 221, added 221
+Progress: resolved 294, reused 0, downloaded 222, added 221
+Progress: resolved 294, reused 0, downloaded 222, added 222
+Progress: resolved 294, reused 0, downloaded 223, added 222
+Progress: resolved 294, reused 0, downloaded 223, added 223, done
+
+dependencies:
++ @telegram-apps/sdk-vue 2.0.31 deprecated
++ axios 1.13.5
++ lucide-vue-next 0.469.0 (0.575.0 is available)
++ pinia 2.3.1 (3.0.4 is available)
++ vue 3.5.29
++ vue-router 4.6.4 (5.0.3 is available)
+
+devDependencies:
++ @tailwindcss/vite 4.2.1
++ @vitejs/plugin-vue 5.2.4 (6.0.4 is available)
++ @vue/test-utils 2.4.6
++ jsdom 26.1.0 (28.1.0 is available)
++ tailwindcss 4.2.1
++ typescript 5.9.3
++ vite 6.4.1 (7.3.1 is available)
++ vitest 3.2.4 (4.0.18 is available)
++ vue-tsc 2.2.12 (3.2.5 is available)
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild@0.25.12, vue-demi@0.14.10.                  │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 2m 15.2s using pnpm v10.30.3
+
+=== INSTALL RESULT: SUCCESS ===

@@ -1,0 +1,66 @@
+Task 5: TypeScript Type Definitions and Axios API Client
+==========================================================
+
+COMPLETION EVIDENCE
+-------------------
+
+✓ All type definition files created:
+  - frontend/src/types/common.ts (PaginatedResponse<T>, ApiError)
+  - frontend/src/types/user.ts (User, UserRegistration, UserUpdate, UserPublic, AvatarUploadResponse)
+  - frontend/src/types/category.ts (Category, CategoryCreate)
+  - frontend/src/types/listing.ts (Listing, ListingStatus, ListingPhoto, ListingCreate, ListingUpdate, PhotoUploadResponse, PhotoConfirm)
+  - frontend/src/types/index.ts (barrel export)
+
+✓ All API client files created:
+  - frontend/src/api/client.ts (Axios instance with request/response interceptors for Telegram initData auth)
+  - frontend/src/api/users.ts (getProfile, register, updateProfile, getAvatarUploadUrl, getPublicProfile)
+  - frontend/src/api/listings.ts (getListings, getListing, createListing, updateListing, deleteListing, getMyListings, getPhotoUploadUrl, confirmPhotoUpload, deletePhoto)
+  - frontend/src/api/categories.ts (getCategories, proposeCategory)
+  - frontend/src/api/index.ts (barrel export)
+
+✓ TypeScript Type Check Result:
+  Command: cd /home/fosterspc/project/site/frontend && npx vue-tsc --noEmit
+  Status: PASSED (no errors, no warnings)
+
+IMPLEMENTATION DETAILS
+----------------------
+
+1. Type System:
+   - All types are properly exported via barrel files
+   - No use of 'any' types
+   - Full type safety for API responses
+   - Proper use of generics (PaginatedResponse<T>)
+
+2. API Client (client.ts):
+   - Axios instance with baseURL from VITE_API_URL env var
+   - Request interceptor: Attaches Telegram initData as "tma {raw}" Authorization header
+   - Response interceptor: Centralized error handling for 401 and 5xx errors
+   - 10-second timeout configured
+
+3. API Functions:
+   - All functions are typed with proper return types
+   - All functions use apiClient for HTTP requests
+   - Proper TypeScript generics for response typing
+   - CatalogFilters interface for flexible listing queries
+
+4. No Implementation Shortcuts:
+   - No @ts-ignore directives
+   - No implicit any types
+   - All imports properly typed
+   - All exports properly typed
+
+TASK COMPLETION CHECKLIST
+--------------------------
+[✓] frontend/src/types/user.ts created
+[✓] frontend/src/types/listing.ts created
+[✓] frontend/src/types/category.ts created
+[✓] frontend/src/types/common.ts created
+[✓] frontend/src/types/index.ts barrel export created
+[✓] frontend/src/api/client.ts with Axios + interceptors created
+[✓] frontend/src/api/users.ts stub functions created
+[✓] frontend/src/api/listings.ts stub functions created
+[✓] frontend/src/api/categories.ts stub functions created
+[✓] npx vue-tsc --noEmit passes
+[✓] Evidence saved
+
+Task 5 of 31: COMPLETE

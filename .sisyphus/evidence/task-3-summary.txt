@@ -1,0 +1,146 @@
+=== TASK 3: FRONTEND SCAFFOLDING - COMPLETION SUMMARY ===
+Date: 2026-02-26
+Status: ✓ COMPLETE
+
+DELIVERABLES CHECKLIST:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ frontend/ fully scaffolded with correct structure
+  - All required directories created
+  - All placeholder directories with .gitkeep files
+  - Directory structure matches specification
+
+✓ frontend/package.json with all dependencies
+  - Vue 3.5.0
+  - Vue Router 4.5.0
+  - Pinia 2.3.0
+  - Axios 1.7.0
+  - @telegram-apps/sdk-vue 2.0.0
+  - lucide-vue-next 0.469.0
+  - TailwindCSS 4.0.0
+  - @tailwindcss/vite 4.0.0
+  - TypeScript 5.7.0
+  - Vite 6.0.0
+  - Vitest 3.0.0
+  - vue-tsc 2.2.0
+
+✓ frontend/vite.config.ts with TailwindCSS v4 plugin + alias + proxy
+  - TailwindCSS v4 Vite plugin configured
+  - @ alias for src/ directory
+  - /api proxy to VITE_API_URL (default: http://localhost:8000)
+  - Proper build configuration with manual chunks
+  - Test environment configured (jsdom)
+
+✓ frontend/src/main.ts with Telegram SDK init + dev mock pattern
+  - init() called after bootstrap
+  - isTMA() check for dev environment
+  - mockTelegramEnv() for development without Telegram
+  - Proper error handling for non-Telegram contexts
+  - Pinia and Router initialization
+
+✓ frontend/src/assets/main.css with TailwindCSS v4 @import + @theme
+  - @import "tailwindcss" for v4 syntax
+  - @theme block with custom CSS variables
+  - Telegram theme color integration
+  - Global styles for html, body, #app
+  - Font smoothing and box-sizing reset
+
+✓ frontend/src/router/index.ts using createWebHistory() (NOT hash)
+  - createWebHistory() for clean URLs
+  - Routes array prepared for Task 12
+  - Proper router export
+
+✓ frontend/src/App.vue with <RouterView>
+  - Root component with RouterView
+  - Ready for page rendering
+
+✓ frontend/tsconfig.json + frontend/tsconfig.app.json with strict mode
+  - Strict mode enabled
+  - ES2020 target
+  - Path aliases configured
+  - noUnusedLocals and noUnusedParameters enabled
+  - Proper module resolution
+
+✓ frontend/.env.example with VITE_API_URL
+  - VITE_API_URL=http://localhost:8000
+
+✓ cd frontend && pnpm install succeeds
+  - 223 packages installed
+  - No errors or critical warnings
+  - All dependencies resolved correctly
+
+✓ pnpm run build succeeds
+  - vue-tsc type checking passed
+  - Vite build completed successfully
+  - Output: dist/ directory with optimized bundles
+  - Chunk splitting configured (vue-vendor, ui-vendor)
+  - Build size: ~140KB total (gzipped: ~52KB)
+
+✓ Evidence saved to .sisyphus/evidence/task-3-*.txt
+  - task-3-pnpm-install.txt (full install log)
+  - task-3-build.txt (full build log)
+  - task-3-structure.txt (structure verification)
+  - task-3-summary.txt (this file)
+
+CRITICAL VERIFICATIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ NO tailwind.config.js created (TailwindCSS v4 uses CSS @theme)
+✓ Router uses createWebHistory (NOT createWebHashHistory)
+✓ Telegram SDK properly initialized with dev mock pattern
+✓ All TypeScript configs in strict mode
+✓ API proxy configured for backend communication
+✓ Build passes without errors or warnings
+
+DIRECTORY STRUCTURE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+frontend/
+├── index.html
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+├── tsconfig.app.json
+├── .env.example
+├── src/
+│   ├── main.ts
+│   ├── App.vue
+│   ├── assets/
+│   │   └── main.css
+│   ├── api/
+│   │   ├── client.ts
+│   │   ├── categories.ts
+│   │   ├── listings.ts
+│   │   ├── users.ts
+│   │   └── index.ts
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── AppLayout.vue
+│   │   └── ui/
+│   │       └── .gitkeep
+│   ├── composables/
+│   │   └── .gitkeep
+│   ├── features/
+│   │   └── .gitkeep
+│   ├── router/
+│   │   ├── index.ts
+│   │   └── routes.ts
+│   ├── stores/
+│   │   └── .gitkeep
+│   └── types/
+│       ├── category.ts
+│       ├── common.ts
+│       ├── index.ts
+│       ├── listing.ts
+│       └── user.ts
+├── node_modules/ (223 packages)
+└── dist/ (build output)
+
+NEXT STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Task 4: Backend API scaffolding (FastAPI + SQLAlchemy)
+Task 5: API client implementation (axios interceptors, error handling)
+Task 12: Router and page components
+Task 13: Pinia stores (auth, listings, categories)
+
