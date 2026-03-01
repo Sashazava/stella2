@@ -6,40 +6,77 @@ import { router } from './router'
 import './assets/main.css'
 
 async function bootstrap() {
+  console.log('[BOOT] 1/9 bootstrap() started')
+
   // Dev mode: mock Telegram environment to prevent init() crash outside Telegram
   if (import.meta.env.DEV) {
+    console.log('[BOOT] DEV mode detected, checking TMA...')
     const { setupDevMock } = await import('./lib/telegram-mock')
     try {
       const isTma = await isTMA('complete')
       if (!isTma) {
+        console.log('[BOOT] Not in TMA, applying dev mock')
         setupDevMock()
       }
     } catch {
-      // isTMA check failed — not in Telegram, apply mock
+      console.log('[BOOT] isTMA check failed, applying dev mock')
       setupDevMock()
     }
   }
 
-  init()
+  console.log('[BOOT] 2/9 calling init()')
+  try {
+    init()
+    console.log('[BOOT] 2/9 init() OK')
+  } catch (e) {
+    console.error('[BOOT] 2/9 init() FAILED:', e)
+  }
 
   // Mount SDK UI components with availability guards
-  if (viewport.mount.isAvailable()) {
-    await viewport.mount()
-    viewport.bindCssVars()
-    if (viewport.expand.isAvailable()) viewport.expand()
-  }
-  if (themeParams.mount.isAvailable()) {
-    await themeParams.mount()
-    themeParams.bindCssVars()
-  }
-  if (backButton.mount.isAvailable()) {
-    backButton.mount()
+  try {
+    console.log('[BOOT] 3/9 viewport.mount.isAvailable():', viewport.mount.isAvailable())
+    if (viewport.mount.isAvailable()) {
+      await viewport.mount()
+      console.log('[BOOT] 3/9 viewport.mount() OK')
+      viewport.bindCssVars()
+      console.log('[BOOT] 3/9 viewport.bindCssVars() OK')
+      if (viewport.expand.isAvailable()) viewport.expand()
+    }
+  } catch (e) {
+    console.error('[BOOT] 3/9 viewport FAILED:', e)
   }
 
+  try {
+    console.log('[BOOT] 4/9 themeParams.mount.isAvailable():', themeParams.mount.isAvailable())
+    if (themeParams.mount.isAvailable()) {
+      await themeParams.mount()
+      console.log('[BOOT] 4/9 themeParams.mount() OK')
+      themeParams.bindCssVars()
+      console.log('[BOOT] 4/9 themeParams.bindCssVars() OK')
+    }
+  } catch (e) {
+    console.error('[BOOT] 4/9 themeParams FAILED:', e)
+  }
+
+  try {
+    console.log('[BOOT] 5/9 backButton.mount.isAvailable():', backButton.mount.isAvailable())
+    if (backButton.mount.isAvailable()) {
+      backButton.mount()
+      console.log('[BOOT] 5/9 backButton.mount() OK')
+    }
+  } catch (e) {
+    console.error('[BOOT] 5/9 backButton FAILED:', e)
+  }
+
+  console.log('[BOOT] 6/9 createApp()')
   const app = createApp(App)
+  console.log('[BOOT] 7/9 use(pinia)')
   app.use(createPinia())
+  console.log('[BOOT] 8/9 use(router)')
   app.use(router)
+  console.log('[BOOT] 9/9 mounting #app')
   app.mount('#app')
+  console.log('[BOOT] ✅ App mounted successfully')
 }
 
-bootstrap()
+bootstrap().catch(e => console.error('[BOOT] ❌ bootstrap() FATAL:', e))
