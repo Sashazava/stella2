@@ -18,6 +18,7 @@ FROM python:3.12-slim AS backend-builder
 RUN pip install uv
 WORKDIR /build
 COPY backend/pyproject.toml .
+COPY backend/app/ ./app/
 RUN uv venv && uv pip install .
 
 # ============================================================
