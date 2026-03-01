@@ -21,15 +21,19 @@ const SPLASH_KEY = 'stella_splash_shown'
 const SPLASH_DURATION = 3000
 
 onMounted(() => {
+  console.log('[SPLASH] onMounted, sessionStorage key:', sessionStorage.getItem(SPLASH_KEY))
   if (sessionStorage.getItem(SPLASH_KEY)) {
-    router.push('/catalog')
+    console.log('[SPLASH] key exists → pushing /catalog immediately')
+    router.push('/catalog').then(() => console.log('[SPLASH] push /catalog resolved')).catch(e => console.error('[SPLASH] push /catalog REJECTED:', e))
     return
   }
 
   sessionStorage.setItem(SPLASH_KEY, '1')
+  console.log('[SPLASH] first visit → waiting 3s then push /catalog')
 
   setTimeout(() => {
-    router.push('/catalog')
+    console.log('[SPLASH] 3s elapsed → pushing /catalog')
+    router.push('/catalog').then(() => console.log('[SPLASH] push /catalog resolved')).catch(e => console.error('[SPLASH] push /catalog REJECTED:', e))
   }, SPLASH_DURATION)
 })
 </script>

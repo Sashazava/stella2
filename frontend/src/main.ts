@@ -78,13 +78,25 @@ async function bootstrap() {
 
   console.log('[BOOT] 6/9 createApp()')
   const app = createApp(App)
+
+  // Global error handler — catch any unhandled Vue errors
+  app.config.errorHandler = (err, instance, info) => {
+    console.error('[VUE ERROR]', info, err)
+  }
+
   console.log('[BOOT] 7/9 use(pinia)')
   app.use(createPinia())
   console.log('[BOOT] 8/9 use(router)')
   app.use(router)
+
+  // Router error handler
+  router.onError((err) => {
+    console.error('[ROUTER ERROR]', err)
+  })
+
   console.log('[BOOT] 9/9 mounting #app')
   app.mount('#app')
   console.log('[BOOT] ✅ App mounted successfully')
-}
+  console.log('[BOOT] Current URL:', window.location.href)
 
 bootstrap().catch(e => console.error('[BOOT] ❌ bootstrap() FATAL:', e))
