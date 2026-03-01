@@ -29,7 +29,7 @@ async function bootstrap() {
     if (viewport.expand.isAvailable()) viewport.expand()
   }
   if (themeParams.mount.isAvailable()) {
-    themeParams.mount()
+    await themeParams.mount()
     themeParams.bindCssVars()
   }
   if (backButton.mount.isAvailable()) {
