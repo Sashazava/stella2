@@ -226,3 +226,35 @@ postgres, redis, minio (internal network only)
 - All project files are tracked and committed
 - Development can proceed with `just up` to start infrastructure
 - README provides clear onboarding path for new developers
+
+## [2026-03-01] Task 29: Backend Tests
+
+### Key architecture findings
+- `listings` router uses prefix `/listings` (NOT `/api/listings`) — all other routers use `/api/` prefix
+- `ListingCreate.category_id` is **required** (non-Optional UUID) — POST /listings must include it
+- `_listing_to_response()` calls `CategoryInfo.model_validate(listing.category)` — if `category_id=None` the endpoint 500s; catalog endpoint handles None category gracefully via `if listing.category:`
+- `CategoryResponse` schema does NOT expose `is_approved` — must verify from DB directly in tests
+- `get_current_user` uses `authorization: str = Header(...)` (required) — missing header returns **422**, not 401
+
+### SQLite in-memory compatibility
+- `func.now()` compiles to literal `now()` in SQLite DDL/DML which SQLite does not support
+- Fix: patch `Base.metadata` at conftest.py module level before creating engine — replace `server_default` with `text("CURRENT_TIMESTAMP")` and `onupdate` with `ColumnDefault(python_callable, for_update=True)`
+- Must use `StaticPool` + `connect_args={"check_same_thread": False}` with `sqlite+aiosqlite:///:memory:` — otherwise each connection gets a separate in-memory DB and tables are invisible across sessions
+
+### aiogram bot token
+- `Bot(token="")` raises `TokenValidationError` at construction time in aiogram 3.x
+- Set `os.environ.setdefault("BOT_TOKEN", "123456789:ABCdefGHIjklMNOpqrsTUVwxyz")` at the very top of conftest.py, BEFORE any app import
+- `Settings()` (pydantic-settings) reads from env at instantiation, so env var must be set before first import of `app.config`
+
+### Lifespan mock strategy
+- `with patch("app.main.lifespan", mock): from app.main import app` does NOT work — `app = FastAPI(lifespan=lifespan)` already ran with the original function before the patch takes effect
+- Correct approach: patch individual functions called inside the lifespan (`bot`, `init_redis`, `close_redis`, `init_minio`, `init_minio_public`, `ensure_buckets`, `create_async_engine`, `async_sessionmaker`) inside the `client` fixture using `unittest.mock.patch` context managers
+- `async_sessionmaker(MagicMock_engine, ...)` fails isinstance check — also patch `app.main.async_sessionmaker`
+- `engine.dispose()` is `await`ed in shutdown — mock engine needs `dispose = AsyncMock()`
+
+### Test isolation
+- Function-scoped `engine` fixture (one fresh in-memory DB per test) avoids inter-test contamination
+- Shared `db_session` between factory calls and HTTP handler (via `override_get_db`) works because StaticPool enforces single connection
+- `mock_auth_admin` modifies `settings.admin_telegram_ids` in-place and restores on teardown — safe for sequential async tests
+
+### Total test count: 45 tests across 5 files (>20 minimum)

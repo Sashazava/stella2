@@ -1,4 +1,4 @@
-"""Factory helpers for creating test database objects."""
+"""Factory helpers for creating test objects directly in the database."""
 from __future__ import annotations
 
 import uuid
@@ -19,11 +19,12 @@ async def create_user(
     city: str = "Москва",
     is_registered: bool = True,
 ) -> User:
+    """Insert and return a User with sensible defaults."""
     user = User(
         telegram_id=telegram_id,
         first_name=first_name,
         last_name="User",
-        username="testuser",
+        username=f"user{telegram_id}",
         city=city,
         phone="+79001234567",
         is_registered=is_registered,
@@ -39,7 +40,11 @@ async def create_category(
     name: str = "Электроника",
     is_approved: bool = True,
 ) -> Category:
-    slug = name.lower().replace(" ", "-")
+    """Insert and return a Category."""
+    # Build a simple ASCII slug (avoid non-ASCII chars in slug for simplicity)
+    slug = name.lower().replace(" ", "-").replace("э", "e")
+    # Uniquify slug to avoid UNIQUE constraint failures within a single test
+    slug = f"{slug}-{uuid.uuid4().hex[:6]}"
     category = Category(
         name=name,
         slug=slug,
@@ -60,6 +65,7 @@ async def create_listing(
     title: str = "Test Listing",
     price: Decimal = Decimal("1000.00"),
 ) -> Listing:
+    """Insert and return a Listing with sensible defaults."""
     listing = Listing(
         title=title,
         description="Test description for listing",
@@ -81,6 +87,7 @@ async def create_photo(
     listing: Listing,
     position: int = 0,
 ) -> ListingPhoto:
+    """Insert and return a ListingPhoto."""
     photo = ListingPhoto(
         listing_id=listing.id,
         object_key=f"listings/{uuid.uuid4()}.jpg",

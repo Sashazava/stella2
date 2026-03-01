@@ -3,17 +3,17 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-import pytest
-
 from tests.factories import create_category, create_listing, create_user
 from app.models.listing import ListingStatus
 
 
 class TestCatalogFiltering:
-    """GET /api/catalog — filtering and pagination."""
+    """GET /api/catalog — filtering, sorting, and pagination."""
 
     async def test_catalog_returns_only_approved_listings(self, client, db_session):
+        """Only ListingStatus.approved items appear in the catalog."""
         user = await create_user(db_session, telegram_id=11111)
+        # Catalog response handles None category gracefully
         await create_listing(db_session, seller=user, status=ListingStatus.approved, title="Одобрено")
         await create_listing(db_session, seller=user, status=ListingStatus.pending, title="Ожидает")
         await create_listing(db_session, seller=user, status=ListingStatus.rejected, title="Отклонено")
@@ -64,8 +64,8 @@ class TestCatalogFiltering:
 
     async def test_catalog_sort_price_desc(self, client, db_session):
         user = await create_user(db_session, telegram_id=55551)
-        await create_listing(db_session, seller=user, title="Дорогой2", price=Decimal("8888.00"))
-        await create_listing(db_session, seller=user, title="Дешёвый2", price=Decimal("200.00"))
+        await create_listing(db_session, seller=user, title="Дорогой 2", price=Decimal("8888.00"))
+        await create_listing(db_session, seller=user, title="Дешёвый 2", price=Decimal("200.00"))
 
         resp = await client.get("/api/catalog?sort=price_desc")
         assert resp.status_code == 200
@@ -75,6 +75,7 @@ class TestCatalogFiltering:
             assert prices == sorted(prices, reverse=True)
 
     async def test_catalog_pagination(self, client, db_session):
+        """per_page and page parameters work; total/total_pages are calculated."""
         user = await create_user(db_session, telegram_id=66661)
         for i in range(5):
             await create_listing(db_session, seller=user, title=f"Товар {i}")
@@ -82,22 +83,30 @@ class TestCatalogFiltering:
         resp = await client.get("/api/catalog?per_page=2&page=1")
         assert resp.status_code == 200
         data = resp.json()
-        assert "items" in data
-        assert "total" in data
-        assert "page" in data
-        assert "per_page" in data
-        assert "total_pages" in data
-        assert len(data["items"]) <= 2
+        assert len(data["items"]) == 2
+        assert data["total"] == 5
+        assert data["per_page"] == 2
+        assert data["total_pages"] == 3
+
+        resp2 = await client.get("/api/catalog?per_page=2&page=3")
+        assert resp2.status_code == 200
+        assert len(resp2.json()["items"]) == 1  # 5 total, page 3 has only 1
 
     async def test_catalog_returns_paginated_response_shape(self, client, db_session):
+        """Response always contains the required PaginatedResponse fields."""
         resp = await client.get("/api/catalog")
         assert resp.status_code == 200
         data = resp.json()
         assert set(data.keys()) >= {"items", "total", "page", "per_page", "total_pages"}
 
-    async def test_catalog_empty_when_no_approved_listings(self, client):
+    async def test_catalog_empty_when_no_approved_listings(self, client, db_session):
+        """Fresh DB with no listings returns empty items list."""
+        user = await create_user(db_session, telegram_id=77771)
+        # Create only non-approved listings
+        await create_listing(db_session, seller=user, status=ListingStatus.pending)
+
         resp = await client.get("/api/catalog")
         assert resp.status_code == 200
         data = resp.json()
         assert isinstance(data["items"], list)
-        assert data["total"] >= 0
+        assert data["total"] == 0
