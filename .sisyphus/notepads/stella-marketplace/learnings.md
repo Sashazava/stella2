@@ -176,3 +176,53 @@ postgres, redis, minio (internal network only)
 - All inter-service communication uses Docker service names (postgres:5432, redis:6379, minio:9000)
 - No development tools or volumes included
 - All services have `restart: unless-stopped` for resilience
+
+## [2026-03-01] Task 31: Git Init + README
+
+### Completed Actions
+1. ✓ Initialized git repository at `/home/fosterspc/project/site/`
+2. ✓ Created comprehensive README.md with:
+   - Project overview and Russian tagline
+   - Complete tech stack documentation
+   - Prerequisites and quick start guide
+   - Project structure overview
+   - Available just recipes
+   - Deployment instructions (Coolify)
+   - Bot moderation commands
+   - Environment variables reference
+3. ✓ Configured git user locally (stella@example.com / Stella Dev)
+4. ✓ Staged all 135 project files
+5. ✓ Verified .env is NOT staged (only .env.example)
+6. ✓ Created initial commit: `feat: initial Stella marketplace implementation`
+
+### Key Findings
+- .gitignore already covers all necessary patterns:
+  - Python: `__pycache__/`, `*.py[cod]`, `.venv`, `venv/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`
+  - Node: `node_modules/`, `dist/`, `.vite/`, `.cache/`
+  - Environment: `.env`, `.env.local`, `.env.*.local`
+  - IDE/OS: `.vscode/`, `.idea/`, `.DS_Store`, etc.
+- Project structure is well-organized with clear separation:
+  - `backend/` (FastAPI + aiogram)
+  - `frontend/` (Vue 3 + TypeScript)
+  - `infra/` (Nginx, PostgreSQL init)
+  - Docker Compose files for dev and prod
+- justfile recipes are comprehensive and follow naming convention:
+  - `py-*` for Python tasks
+  - `node-*` for Node tasks
+  - `db-*` for database tasks
+  - `up/down` for infrastructure
+
+### Verification Results
+- ✓ Git repository initialized successfully
+- ✓ Working tree clean after commit
+- ✓ 1 commit in history: `56fdbd1 feat: initial Stella marketplace implementation`
+- ✓ 135 files committed (no secrets)
+- ✓ README.md created with all required sections
+- ✓ .env excluded from repository (security best practice)
+- ✓ .env.example included for reference
+
+### Notes for Future Tasks
+- Repository is ready for remote configuration (user will add origin)
+- All project files are tracked and committed
+- Development can proceed with `just up` to start infrastructure
+- README provides clear onboarding path for new developers
