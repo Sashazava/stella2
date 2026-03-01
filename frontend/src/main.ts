@@ -87,6 +87,15 @@ async function bootstrap() {
   console.log('[BOOT] 7/9 use(pinia)')
   app.use(createPinia())
   console.log('[BOOT] 8/9 use(router)')
+
+  // Telegram WebView caches last URL — always start fresh at root
+  if (window.location.pathname !== '/') {
+    console.log('[BOOT] Cached URL detected:', window.location.pathname, '→ resetting to /')
+    history.replaceState(null, '', '/')
+  }
+  // Reset splash flag so animation plays on every Mini App launch
+  sessionStorage.removeItem('stella_splash_shown')
+
   app.use(router)
 
   // Router error handler
