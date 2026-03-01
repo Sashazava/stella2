@@ -18,7 +18,7 @@ FROM python:3.12-slim AS backend-builder
 RUN pip install uv
 WORKDIR /build
 COPY backend/pyproject.toml .
-RUN uv venv && uv pip install --no-dev .
+RUN uv venv && uv pip install .
 
 # ============================================================
 # Stage 3: Production image — Nginx + Granian via supervisord
