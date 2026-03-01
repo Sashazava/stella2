@@ -24,7 +24,7 @@ async function bootstrap() {
 
   // Mount SDK UI components with availability guards
   if (viewport.mount.isAvailable()) {
-    viewport.mount()
+    await viewport.mount()
     viewport.bindCssVars()
     if (viewport.expand.isAvailable()) viewport.expand()
   }
