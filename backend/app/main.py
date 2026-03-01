@@ -34,17 +34,22 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     app.state.sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
     dp["sessionmaker"] = app.state.sessionmaker  # inject into bot dispatcher for handlers
     # MinIO
-    app.state.minio = init_minio(
-        settings.minio_endpoint,
-        access_key=settings.minio_root_user,
-        secret_key=settings.minio_root_password,
-    )
-    app.state.minio_public = init_minio_public(
-        settings.minio_server_url,
-        access_key=settings.minio_root_user,
-        secret_key=settings.minio_root_password,
-    )
-    ensure_buckets(app.state.minio)
+    try:
+        app.state.minio = init_minio(
+            settings.minio_endpoint,
+            access_key=settings.minio_root_user,
+            secret_key=settings.minio_root_password,
+        )
+        app.state.minio_public = init_minio_public(
+            settings.minio_server_url,
+            access_key=settings.minio_root_user,
+            secret_key=settings.minio_root_password,
+        )
+        ensure_buckets(app.state.minio)
+    except Exception as exc:
+        print(f"WARNING: MinIO unavailable, file uploads disabled ({exc})")
+        app.state.minio = None
+        app.state.minio_public = None
     yield
     # Shutdown
     await bot.delete_webhook()
