@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { init, isTMA, viewport, themeParams, backButton } from '@telegram-apps/sdk-vue'
+import { init, initData, isTMA, viewport, themeParams, backButton } from '@telegram-apps/sdk-vue'
 import App from './App.vue'
 import { router } from './router'
 import './assets/main.css'
@@ -30,6 +30,14 @@ async function bootstrap() {
     console.log('[BOOT] 2/9 init() OK')
   } catch (e) {
     console.error('[BOOT] 2/9 init() FAILED:', e)
+  }
+
+  // Restore Telegram init data (user info, auth) from launch params
+  try {
+    initData.restore()
+    console.log('[BOOT] 2.5/9 initData.restore() OK, raw:', initData.raw() ? initData.raw()!.substring(0, 80) + '...' : 'EMPTY')
+  } catch (e) {
+    console.error('[BOOT] 2.5/9 initData.restore() FAILED:', e)
   }
 
   // Mount SDK UI components with availability guards
