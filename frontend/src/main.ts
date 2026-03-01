@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { init, initData, isTMA, viewport, themeParams, backButton } from '@telegram-apps/sdk-vue'
 import App from './App.vue'
-import { router } from './router'
+// NOTE: router is imported dynamically below (after URL fix)
 import './assets/main.css'
 
 async function bootstrap() {
@@ -76,7 +76,19 @@ async function bootstrap() {
     console.error('[BOOT] 5/9 backButton FAILED:', e)
   }
 
-  console.log('[BOOT] 6/9 createApp()')
+  // Fix cached URL BEFORE loading router — createWebHistory() captures URL at import time
+  if (window.location.pathname !== '/') {
+    console.log('[BOOT] Cached URL detected:', window.location.pathname, '→ resetting to /')
+    history.replaceState(null, '', '/')
+  }
+  // Reset splash flag so animation plays on every Mini App launch
+  sessionStorage.removeItem('stella_splash_shown')
+
+  // Dynamic import AFTER URL fix — so createWebHistory() sees '/' not '/error'
+  console.log('[BOOT] 6/9 loading router (dynamic import)')
+  const { router } = await import('./router')
+  console.log('[BOOT] 6/9 router loaded, creating app')
+
   const app = createApp(App)
 
   // Global error handler — catch any unhandled Vue errors
@@ -87,15 +99,6 @@ async function bootstrap() {
   console.log('[BOOT] 7/9 use(pinia)')
   app.use(createPinia())
   console.log('[BOOT] 8/9 use(router)')
-
-  // Telegram WebView caches last URL — always start fresh at root
-  if (window.location.pathname !== '/') {
-    console.log('[BOOT] Cached URL detected:', window.location.pathname, '→ resetting to /')
-    history.replaceState(null, '', '/')
-  }
-  // Reset splash flag so animation plays on every Mini App launch
-  sessionStorage.removeItem('stella_splash_shown')
-
   app.use(router)
 
   // Router error handler
@@ -108,6 +111,5 @@ async function bootstrap() {
   console.log('[BOOT] ✅ App mounted successfully')
   console.log('[BOOT] Current URL:', window.location.href)
 }
-
 
 bootstrap().catch(e => console.error('[BOOT] ❌ bootstrap() FATAL:', e))
