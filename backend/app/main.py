@@ -9,7 +9,7 @@ from app.config import settings
 from app.bot.bot import bot, dp
 import app.bot.handlers  # noqa: F401 — registers handlers with dp
 from app.services.redis import init_redis, close_redis
-from app.services.storage import init_minio, init_minio_public, ensure_buckets
+from app.services.storage import init_minio_public, ensure_buckets
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
@@ -35,17 +35,14 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     dp["sessionmaker"] = app.state.sessionmaker  # inject into bot dispatcher for handlers
     # MinIO
     try:
-        app.state.minio = init_minio(
-            settings.minio_endpoint,
-            access_key=settings.minio_root_user,
-            secret_key=settings.minio_root_password,
-        )
-        app.state.minio_public = init_minio_public(
+        minio_client = init_minio_public(
             settings.minio_server_url,
             access_key=settings.minio_root_user,
             secret_key=settings.minio_root_password,
         )
-        ensure_buckets(app.state.minio)
+        ensure_buckets(minio_client)
+        app.state.minio = minio_client
+        app.state.minio_public = minio_client
     except Exception as exc:
         print(f"WARNING: MinIO unavailable, file uploads disabled ({exc})")
         app.state.minio = None
