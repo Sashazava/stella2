@@ -15,11 +15,10 @@ RUN pnpm run build
 # ============================================================
 FROM python:3.12-slim AS backend-builder
 
-RUN pip install uv
 WORKDIR /build
 COPY backend/pyproject.toml .
 COPY backend/app/ ./app/
-RUN uv venv && uv pip install .
+RUN python -m venv .venv && .venv/bin/pip install --no-cache-dir .
 
 # ============================================================
 # Stage 3: Production image — Nginx + Granian via supervisord
