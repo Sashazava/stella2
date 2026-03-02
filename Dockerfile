@@ -15,7 +15,7 @@ RUN pnpm run build
 # ============================================================
 FROM python:3.12-slim AS backend-builder
 
-WORKDIR /build
+WORKDIR /app
 COPY backend/pyproject.toml .
 COPY backend/app/ ./app/
 RUN python -m venv .venv && .venv/bin/pip install --no-cache-dir .
@@ -33,7 +33,7 @@ RUN apt-get update \
 WORKDIR /app
 
 # Python venv from builder
-COPY --from=backend-builder /build/.venv /app/.venv
+COPY --from=backend-builder /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Backend source code
