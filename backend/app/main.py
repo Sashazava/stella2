@@ -35,10 +35,16 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     except Exception as exc:
         print(f"WARNING: Menu button setup skipped ({exc})")
     app.state.redis = await init_redis(settings.redis_url)
-    # Database — ensure psycopg driver for async (Coolify may provide plain postgresql:// URL)
+    # Database — normalize URL to use psycopg async driver
+    # Coolify may provide postgres://, postgresql://, or postgresql+asyncpg://
     db_url = settings.database_url
-    if db_url.startswith("postgresql://"):
-        db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    if db_url.startswith("postgres://"):
+        db_url = "postgresql+psycopg://" + db_url[len("postgres://"):]
+    elif db_url.startswith("postgresql://"):
+        db_url = "postgresql+psycopg://" + db_url[len("postgresql://"):]
+    elif db_url.startswith("postgresql+asyncpg://"):
+        db_url = "postgresql+psycopg://" + db_url[len("postgresql+asyncpg://"):]
+    print(f"DB URL scheme: {db_url.split('@')[0].split('://')[0]}")
     engine = create_async_engine(db_url)
     app.state.sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
     dp["sessionmaker"] = app.state.sessionmaker  # inject into bot dispatcher for handlers
