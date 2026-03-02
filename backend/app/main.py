@@ -16,18 +16,24 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Startup
-    await bot.set_webhook(
-        url=f"{settings.app_base_url}/bot/webhook",
-        secret_token=settings.webhook_secret,
-        allowed_updates=dp.resolve_used_update_types(),
-        drop_pending_updates=True,
-    )
-    await bot.set_chat_menu_button(
-        menu_button=MenuButtonWebApp(
-            text="Открыть Stella",
-            web_app=WebAppInfo(url=settings.app_base_url),
+    try:
+        await bot.set_webhook(
+            url=f"{settings.app_base_url}/bot/webhook",
+            secret_token=settings.webhook_secret,
+            allowed_updates=dp.resolve_used_update_types(),
+            drop_pending_updates=True,
         )
-    )
+    except Exception as exc:
+        print(f"WARNING: Webhook setup failed, will retry on next restart ({exc})")
+    try:
+        await bot.set_chat_menu_button(
+            menu_button=MenuButtonWebApp(
+                text="Открыть Stella",
+                web_app=WebAppInfo(url=settings.app_base_url),
+            )
+        )
+    except Exception as exc:
+        print(f"WARNING: Menu button setup skipped ({exc})")
     app.state.redis = await init_redis(settings.redis_url)
     # Database
     engine = create_async_engine(settings.database_url)
