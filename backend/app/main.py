@@ -44,7 +44,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         db_url = "postgresql+psycopg://" + db_url[len("postgresql://"):]
     elif db_url.startswith("postgresql+asyncpg://"):
         db_url = "postgresql+psycopg://" + db_url[len("postgresql+asyncpg://"):]
-    print(f"DB URL scheme: {db_url.split('@')[0].split('://')[0]}")
     engine = create_async_engine(db_url)
     app.state.sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
     dp["sessionmaker"] = app.state.sessionmaker  # inject into bot dispatcher for handlers
